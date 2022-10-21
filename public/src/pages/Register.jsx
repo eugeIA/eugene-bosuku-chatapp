@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
-import Logo from "../assets/logo.svg";
+import talking from "../assets/talking.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { registerRoute } from "../utils/APIRoutes";
@@ -87,11 +87,12 @@ export default function Register() {
   return (
     <>
       <FormContainer>
-        <form action="" onSubmit={(event) => handleSubmit(event)}>
-          <div className="brand">
-            <img src={Logo} alt="logo" />
-            <h1>snappy</h1>
+        <div className="register__page">
+          <div className="image__side">
+            <img src={talking} alt="" />
           </div>
+        <form action="" onSubmit={(event) => handleSubmit(event)}>
+          <h3>Register to solola</h3>
           <input
             type="text"
             placeholder="Username"
@@ -121,6 +122,8 @@ export default function Register() {
             Already have an account ? <Link to="/login">Login.</Link>
           </span>
         </form>
+        </div>
+        
       </FormContainer>
       <ToastContainer />
     </>
@@ -135,35 +138,35 @@ const FormContainer = styled.div`
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: #131324;
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    justify-content: center;
-    img {
-      height: 5rem;
+  background-color: silver;
+  .register__page{
+    display:flex;
+    background-color:white;
+    align-items:center;
+    border-radius:1rem;
+    .image__side{
+    img{
+      height:50vh;
+      width:40vw;
     }
-    h1 {
-      color: white;
-      text-transform: uppercase;
-    }
+  }
   }
 
   form {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background-color: #00000076;
+    background-color: white;
     border-radius: 2rem;
     padding: 3rem 5rem;
+    text-align:center;
   }
   input {
     background-color: transparent;
     padding: 1rem;
-    border: 0.1rem solid #4e0eff;
+    border: 0.1rem solid silver;
     border-radius: 0.4rem;
-    color: white;
+    color: #2b2828;
     width: 100%;
     font-size: 1rem;
     &:focus {
@@ -186,7 +189,7 @@ const FormContainer = styled.div`
     }
   }
   span {
-    color: white;
+    color: black;
     text-transform: uppercase;
     a {
       color: #4e0eff;

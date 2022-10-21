@@ -4,11 +4,14 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth");
 const messageRoutes = require("./routes/messages");
 const app = express();
+const passport = require("passport");
 const socket = require("socket.io");
+require("./config/passport");
 require("dotenv").config();
 
 app.use(cors());
 app.use(express.json());
+app.use(passport.initialize());
 
 mongoose
   .connect(process.env.MONGO_URL, {

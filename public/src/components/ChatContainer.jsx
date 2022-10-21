@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import ChatInput from "./ChatInput";
-import Logout from "./Logout";
+// import { format } from "timeago";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
@@ -81,9 +81,10 @@ export default function ChatContainer({ currentChat, socket }) {
           </div>
           <div className="username">
             <h3>{currentChat.username}</h3>
+            <h4>Online</h4>
           </div>
         </div>
-        <Logout />
+        
       </div>
       <div className="chat-messages">
         {messages.map((message) => {
@@ -97,6 +98,7 @@ export default function ChatContainer({ currentChat, socket }) {
                 <div className="content ">
                   <p>{message.message}</p>
                 </div>
+                {/* <p>{format(message.createdAt)}</p> */}
               </div>
             </div>
           );
@@ -112,6 +114,10 @@ const Container = styled.div`
   grid-template-rows: 10% 80% 10%;
   gap: 0.1rem;
   overflow: hidden;
+  background-color:white;
+  padding: 1vh 2vw;
+  border-radius:1rem;
+  width:65vw;
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     grid-template-rows: 15% 70% 15%;
   }
@@ -120,6 +126,7 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
+    border-bottom:solid 1px;
     .user-details {
       display: flex;
       align-items: center;
@@ -130,9 +137,16 @@ const Container = styled.div`
         }
       }
       .username {
+        text-align:center;
+        flex-grow:2;
+        display:flex;
+        flex-direction:column;
+        padding-left:20vw;
         h3 {
-          color: white;
+          color: black;
+          margin-bottom:1vh;
         }
+        
       }
     }
   }
@@ -158,7 +172,7 @@ const Container = styled.div`
         overflow-wrap: break-word;
         padding: 1rem;
         font-size: 1.1rem;
-        border-radius: 1rem;
+        
         color: #d1d1d1;
         @media screen and (min-width: 720px) and (max-width: 1080px) {
           max-width: 70%;
@@ -168,13 +182,13 @@ const Container = styled.div`
     .sended {
       justify-content: flex-end;
       .content {
-        background-color: #4f04ff21;
+        background-color: blue;
       }
     }
     .recieved {
       justify-content: flex-start;
       .content {
-        background-color: #9900ff20;
+        background-color: silver;
       }
     }
   }

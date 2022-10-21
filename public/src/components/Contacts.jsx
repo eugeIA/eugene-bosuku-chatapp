@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Logo from "../assets/logo.svg";
+
+import Logout from "./Logout";
+import {IoSearch,IoChatbubbleEllipses} from "react-icons/io5"
 
 export default function Contacts({ contacts, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
@@ -21,9 +23,23 @@ export default function Contacts({ contacts, changeChat }) {
     <>
       {currentUserImage && currentUserImage && (
         <Container>
-          <div className="brand">
-            <img src={Logo} alt="logo" />
-            <h3>snappy</h3>
+           <div className="current-user">
+            <div className="avatar">
+              <img
+                src={`data:image/svg+xml;base64,${currentUserImage}`}
+                alt="avatar"
+              />
+            </div>
+            <div className="username">
+              <h2>{currentUserName}</h2>
+            </div>
+            <div className="chat__icon"><IoChatbubbleEllipses /></div>
+            <Logout />
+          </div>
+          <div className="contact__container">
+          <div className="search__bar">
+              <IoSearch/>
+              <input type="search" name="" placeholder="Search contact" className="input__search__chat"/>
           </div>
           <div className="contacts">
             {contacts.map((contact, index) => {
@@ -48,38 +64,37 @@ export default function Contacts({ contacts, changeChat }) {
               );
             })}
           </div>
-          <div className="current-user">
-            <div className="avatar">
-              <img
-                src={`data:image/svg+xml;base64,${currentUserImage}`}
-                alt="avatar"
-              />
-            </div>
-            <div className="username">
-              <h2>{currentUserName}</h2>
-            </div>
+          
           </div>
+          
         </Container>
       )}
     </>
   );
 }
 const Container = styled.div`
-  display: grid;
-  grid-template-rows: 10% 75% 15%;
+  display: flex;
+  
   overflow: hidden;
-  background-color: #080420;
-  .brand {
+  background-color: silver;
+  .contact__container{
+    margin-left:3vw;
+    margin-right:3vw;
+    border-radius:1rem;
+    .search__bar {
     display: flex;
     align-items: center;
     gap: 1rem;
     justify-content: center;
-    img {
-      height: 2rem;
-    }
-    h3 {
-      color: white;
-      text-transform: uppercase;
+    background-color:white;
+    margin-bottom:3vh;
+    height:7.5vh;
+    border-radius:1rem;
+    padding-left:1vw;
+    padding-right:0.5vw;
+    .input__search__chat{
+      border:none;
+      color:silver;
     }
   }
   .contacts {
@@ -88,6 +103,8 @@ const Container = styled.div`
     align-items: center;
     overflow: auto;
     gap: 0.8rem;
+    background-color:white;
+    border-radius:1rem;
     &::-webkit-scrollbar {
       width: 0.2rem;
       &-thumb {
@@ -101,12 +118,13 @@ const Container = styled.div`
       min-height: 5rem;
       cursor: pointer;
       width: 90%;
-      border-radius: 0.2rem;
+     
       padding: 0.4rem;
       display: flex;
       gap: 1rem;
       align-items: center;
       transition: 0.5s ease-in-out;
+      border-bottom:solid 1px;
       .avatar {
         img {
           height: 3rem;
@@ -114,7 +132,8 @@ const Container = styled.div`
       }
       .username {
         h3 {
-          color: white;
+          color: black;
+          font-size:100%;
         }
       }
     }
@@ -122,22 +141,40 @@ const Container = styled.div`
       background-color: #9a86f3;
     }
   }
-
+  }
   .current-user {
-    background-color: #0d0d30;
+    background-color: blue;
     display: flex;
-    justify-content: center;
+    flex-direction:column;
+    justify-content: space-between;
     align-items: center;
     gap: 2rem;
+    padding:1vh 3.5vw;
+    border-radius:1rem;
     .avatar {
       img {
-        height: 4rem;
+        height: 7.5rem;
         max-inline-size: 100%;
       }
     }
     .username {
+      display:none;
       h2 {
         color: white;
+      }
+    }
+    .chat__icon{
+      background-color:blue;
+      border-right:solid 5px yellow;
+      align-self:end;
+      margin-right:-3.5vw;
+      margin-top:-40vh;
+      border-top-left-radius:1rem;
+      border-bottom-left-radius:1rem;
+      padding:1vh 0.5vw;
+      svg{
+        color:white;
+        font-size:250%;
       }
     }
     @media screen and (min-width: 720px) and (max-width: 1080px) {

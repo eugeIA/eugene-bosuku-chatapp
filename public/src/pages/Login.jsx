@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import talking from "../assets/talking.jpg"
 import { useNavigate, Link } from "react-router-dom";
-import Logo from "../assets/logo.svg";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loginRoute } from "../utils/APIRoutes";
@@ -47,6 +48,7 @@ export default function Login() {
         username,
         password,
       });
+      console.log(data);
       if (data.status === false) {
         toast.error(data.msg, toastOptions);
       }
@@ -63,12 +65,14 @@ export default function Login() {
 
   return (
     <>
+      
       <FormContainer>
+        <div className="login__page">
+        <div className="image__side">
+          <img src={talking} alt="image__login" />
+        </div>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
-          <div className="brand">
-            <img src={Logo} alt="logo" />
-            <h1>snappy</h1>
-          </div>
+          <h3>Login to solola</h3>
           <input
             type="text"
             placeholder="Username"
@@ -87,6 +91,8 @@ export default function Login() {
             Don't have an account ? <Link to="/register">Create One.</Link>
           </span>
         </form>
+        </div>
+        
       </FormContainer>
       <ToastContainer />
     </>
@@ -97,22 +103,20 @@ const FormContainer = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
-  flex-direction: column;
+  
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: #131324;
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    justify-content: center;
-    img {
-      height: 5rem;
-    }
-    h1 {
-      color: white;
-      text-transform: uppercase;
+  background-color: silver;
+  .login__page{
+    display:flex;
+    background-color:white;
+    align-items:center;
+    border-radius:1rem;
+    .image__side{
+    img{
+      height:30vh;
+      width:30vw;
     }
   }
 
@@ -120,16 +124,19 @@ const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background-color: #00000076;
+    background-color: white;
     border-radius: 2rem;
     padding: 5rem;
+  }
+  h3{
+    text-align:center;
   }
   input {
     background-color: transparent;
     padding: 1rem;
-    border: 0.1rem solid #4e0eff;
+    border: 0.1rem solid silver;
     border-radius: 0.4rem;
-    color: white;
+    color: #2b2525;
     width: 100%;
     font-size: 1rem;
     &:focus {
@@ -152,12 +159,13 @@ const FormContainer = styled.div`
     }
   }
   span {
-    color: white;
+    color: black;
     text-transform: uppercase;
     a {
       color: #4e0eff;
       text-decoration: none;
       font-weight: bold;
     }
+  }
   }
 `;

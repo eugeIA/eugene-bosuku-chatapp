@@ -1,17 +1,45 @@
+
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const jwt = require('jwt-simple') 
+const config = require('../config/jwt')
 
-module.exports.login = async (req, res, next) => {
+
+module.exports.login = async (request, response, next) => {
   try {
-    const { username, password } = req.body;
+    const { username, password } = request.body;
     const user = await User.findOne({ username });
-    if (!user)
-      return res.json({ msg: "Incorrect Username or Password", status: false });
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid)
-      return res.json({ msg: "Incorrect Username or Password", status: false });
-    delete user.password;
-    return res.json({ status: true, user });
+    if (!user){return response.json({ msg: "Incorrect Username or Password", status: false });}
+    else{
+      const payload={
+        id:user.id,
+        name:user.username,
+        expire:Date.now() + 1000*60*60*24
+      }
+      const token=jwt.encode(payload,config.jwtSecret);
+  
+      bcrypt.compare(password, user.password)
+      .then((valid)=>{
+       if(!valid){
+        console.log('invqlid')
+        response.status(401).json("invalid password or username");
+       } 
+       else{
+        console.log(user);
+         delete user.password
+             response.status(200).json({
+               userId:user.id,
+               token:`Bearer ${token}`
+             })
+       }
+      })
+    } 
+    
+   
+    // if (!isPasswordValid)
+    //   return res.json({ msg: "Incorrect Username or Password", status: false });
+    // delete user.password;
+    // return res.json({ status: true, user });
   } catch (ex) {
     next(ex);
   }
