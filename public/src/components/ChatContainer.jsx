@@ -1,10 +1,12 @@
- import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
-import ChatInput from "./ChatInput";
+import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types'; 
+import ChatInput from './ChatInput';
+import process from "process"
 // import { format } from "timeago";
-import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
-import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+import { sendMessageRoute, recieveMessageRoute } from '../utils/APIRoutes';
 
 export default function ChatContainer({ currentChat, socket }) {
   const [messages, setMessages] = useState([]);
@@ -12,9 +14,7 @@ export default function ChatContainer({ currentChat, socket }) {
   const [arrivalMessage, setArrivalMessage] = useState(null);
 
   useEffect(async () => {
-    const data = await JSON.parse(
-      localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-    );
+    const data = await JSON.parse(localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY));
     const response = await axios.post(recieveMessageRoute, {
       from: data._id,
       to: currentChat._id,
@@ -25,19 +25,15 @@ export default function ChatContainer({ currentChat, socket }) {
   useEffect(() => {
     const getCurrentChat = async () => {
       if (currentChat) {
-        await JSON.parse(
-          localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-        )._id;
+        await JSON.parse(localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY))._id;
       }
     };
     getCurrentChat();
   }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
-    const data = await JSON.parse(
-      localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-    );
-    socket.current.emit("send-msg", {
+    const data = await JSON.parse(localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY));
+    socket.current.emit('send-msg', {
       to: currentChat._id,
       from: data._id,
       msg,
@@ -55,7 +51,7 @@ export default function ChatContainer({ currentChat, socket }) {
 
   useEffect(() => {
     if (socket.current) {
-      socket.current.on("msg-recieve", (msg) => {
+      socket.current.on('msg-recieve', (msg) => {
         setArrivalMessage({ fromSelf: false, message: msg });
       });
     }
@@ -66,7 +62,7 @@ export default function ChatContainer({ currentChat, socket }) {
   }, [arrivalMessage]);
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   return (
@@ -74,27 +70,19 @@ export default function ChatContainer({ currentChat, socket }) {
       <div className="chat-header">
         <div className="user-details">
           <div className="avatar">
-            <img
-              src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
-              alt=""
-            />
+            <img src={`data:image/svg+xml;base64,${currentChat.avatarImage}`} alt="" />
           </div>
           <div className="username">
             <h3>{currentChat.username}</h3>
             <h4>Online</h4>
           </div>
         </div>
-        
       </div>
       <div className="chat-messages">
         {messages.map((message) => {
           return (
             <div ref={scrollRef} key={uuidv4()}>
-              <div
-                className={`message ${
-                  message.fromSelf ? "sended" : "recieved"
-                }`}
-              >
+              <div className={`message ${message.fromSelf ? 'sended' : 'recieved'}`}>
                 <div className="content ">
                   <p>{message.message}</p>
                 </div>
@@ -114,10 +102,10 @@ const Container = styled.div`
   grid-template-rows: 10% 80% 10%;
   gap: 0.1rem;
   overflow: hidden;
-  background-color:white;
+  background-color: white;
   padding: 1vh 2vw;
-  border-radius:1rem;
-  width:65vw;
+  border-radius: 1rem;
+  width: 65vw;
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     grid-template-rows: 15% 70% 15%;
   }
@@ -126,7 +114,7 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
-    border-bottom:solid 1px;
+    border-bottom: solid 1px;
     .user-details {
       display: flex;
       align-items: center;
@@ -137,16 +125,15 @@ const Container = styled.div`
         }
       }
       .username {
-        text-align:center;
-        flex-grow:2;
-        display:flex;
-        flex-direction:column;
-        padding-left:20vw;
+        text-align: center;
+        flex-grow: 2;
+        display: flex;
+        flex-direction: column;
+        padding-left: 20vw;
         h3 {
           color: black;
-          margin-bottom:1vh;
+          margin-bottom: 1vh;
         }
-        
       }
     }
   }
@@ -172,7 +159,7 @@ const Container = styled.div`
         overflow-wrap: break-word;
         padding: 1rem;
         font-size: 1.1rem;
-        
+
         color: #d1d1d1;
         @media screen and (min-width: 720px) and (max-width: 1080px) {
           max-width: 70%;
@@ -193,3 +180,8 @@ const Container = styled.div`
     }
   }
 `;
+
+ChatContainer.propTypes = {
+  currentChat: PropTypes.object.isRequired,
+  socket:PropTypes.object.isRequired
+}

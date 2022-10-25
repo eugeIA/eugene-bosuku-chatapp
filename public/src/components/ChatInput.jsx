@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { IoSend } from "react-icons/io5";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import { IoSend } from 'react-icons/io5';
+import styled from 'styled-components';
+import PropTypes from 'prop-types'; 
 // import SendFile from "./SendFile"
 
 export default function ChatInput({ handleSendMsg }) {
-  const [msg, setMsg] = useState("");
-  
+  const [msg, setMsg] = useState('');
 
   const sendChat = (event) => {
     event.preventDefault();
     if (msg.length > 0) {
       handleSendMsg(msg);
-      setMsg("");
+      setMsg('');
     }
   };
 
@@ -25,24 +25,18 @@ export default function ChatInput({ handleSendMsg }) {
         </div>
       </div>
       <form className="input-container" onSubmit={(event) => sendChat(event)}>
-        <input
-          type="text"
-          placeholder="type your message here"
-          onChange={(e) => setMsg(e.target.value)}
-          value={msg}
-        />
+        <input type="text" placeholder="type your message here" onChange={(e) => setMsg(e.target.value)} value={msg} />
         <button type="submit">
           <IoSend />
         </button>
       </form>
-      
     </Container>
   );
 }
 
 const Container = styled.div`
   display: flex;
-  border-top:solid 1px;
+  border-top: solid 1px;
   background-color: white;
   padding: 0 2rem;
   @media screen and (min-width: 720px) and (max-width: 1080px) {
@@ -61,7 +55,6 @@ const Container = styled.div`
         color: silver;
         cursor: pointer;
       }
-      
     }
   }
   .input-container {
@@ -79,8 +72,8 @@ const Container = styled.div`
       border: none;
       padding-left: 1rem;
       font-size: 1.2rem;
-      border-radius:1rem;
-      margin-left:1vw;
+      border-radius: 1rem;
+      margin-left: 1vw;
       &::selection {
         background-color: #9a86f3;
       }
@@ -90,7 +83,7 @@ const Container = styled.div`
     }
     button {
       padding: 0.3rem 1rem;
-      margin:1vw;
+      margin: 1vw;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -108,5 +101,8 @@ const Container = styled.div`
       }
     }
   }
-  
 `;
+
+ChatInput.propTypes = {
+  handleSendMsg: PropTypes.func
+}
