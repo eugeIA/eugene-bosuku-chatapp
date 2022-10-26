@@ -6,6 +6,8 @@ name: check
 on:
   push:
     branches: [ "master" ]
+  pull-request:
+    branches: [ "master" ]
   
 
 jobs:
@@ -26,7 +28,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npx --no-install eslint .
-    - run: npx --no-install prettier --check .
     - run: npm run build --if-present
+    - run: npx lint-staged
  
