@@ -84,6 +84,7 @@ const Container = styled.div`
       border-radius: 1rem;
       padding-left: 1vw;
       padding-right: 0.5vw;
+      
       .input__search__chat {
         border: none;
         color: silver;
@@ -93,10 +94,11 @@ const Container = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
-      overflow: auto;
+      overflow: scroll;
       gap: 0.8rem;
       background-color: white;
       border-radius: 1rem;
+      height:75vh;
       &::-webkit-scrollbar {
         width: 0.2rem;
         &-thumb {

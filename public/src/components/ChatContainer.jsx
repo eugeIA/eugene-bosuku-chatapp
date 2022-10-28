@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types'; 
 import ChatInput from './ChatInput';
 import process from "process"
-// import { format } from "timeago";
+// import { format } from "timeago.js";
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { sendMessageRoute, recieveMessageRoute } from '../utils/APIRoutes';
@@ -176,6 +176,7 @@ const Container = styled.div`
       justify-content: flex-start;
       .content {
         background-color: silver;
+        color:black;
       }
     }
   }

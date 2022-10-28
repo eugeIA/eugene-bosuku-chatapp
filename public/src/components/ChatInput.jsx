@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IoSend } from 'react-icons/io5';
+import { IoSend,IoCamera } from 'react-icons/io5';
 import styled from 'styled-components';
 import PropTypes from 'prop-types'; 
 // import SendFile from "./SendFile"
@@ -19,9 +19,8 @@ export default function ChatInput({ handleSendMsg }) {
     <Container>
       <div className="button-container">
         <div className="emoji">
-          {/* <SendFile /> */}
-          {/* <BsEmojiSmileFill onClick={handleEmojiPickerhideShow} />
-          {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />} */}
+             <IoCamera />
+             <input type="file" />
         </div>
       </div>
       <form className="input-container" onSubmit={(event) => sendChat(event)}>
@@ -50,11 +49,7 @@ const Container = styled.div`
     gap: 1rem;
     .emoji {
       position: relative;
-      svg {
-        font-size: 2rem;
-        color: silver;
-        cursor: pointer;
-      }
+      cursor:pointer;
     }
   }
   .input-container {
