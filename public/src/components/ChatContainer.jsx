@@ -20,6 +20,7 @@ export default function ChatContainer({ currentChat, socket }) {
       to: currentChat._id,
     });
     setMessages(response.data);
+    console.log(messages)
   }, [currentChat]);
 
   useEffect(() => {
@@ -31,28 +32,30 @@ export default function ChatContainer({ currentChat, socket }) {
     getCurrentChat();
   }, [currentChat]);
 
-  const handleSendMsg = async (msg) => {
+  const handleSendMsg = async (msg,img) => {
     const data = await JSON.parse(localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY));
     socket.current.emit('send-msg', {
       to: currentChat._id,
       from: data._id,
       msg,
+      img,
     });
     await axios.post(sendMessageRoute, {
       from: data._id,
       to: currentChat._id,
       message: msg,
-    });
+      image: img,
+    })
 
     const msgs = [...messages];
-    msgs.push({ fromSelf: true, message: msg });
+    msgs.push({ fromSelf: true, message: msg, image:img, });
     setMessages(msgs);
   };
 
   useEffect(() => {
     if (socket.current) {
-      socket.current.on('msg-recieve', (msg) => {
-        setArrivalMessage({ fromSelf: false, message: msg });
+      socket.current.on('msg-recieve', (msg,img) => {
+        setArrivalMessage({ fromSelf: false, message: msg,image:img,});
       });
     }
   }, []);
@@ -82,11 +85,20 @@ export default function ChatContainer({ currentChat, socket }) {
         {messages.map((message) => {
           return (
             <div ref={scrollRef} key={uuidv4()}>
-              <div className={`message ${message.fromSelf ? 'sended' : 'recieved'}`}>
+              <div className={`message ${message.fromSelf ? "sended" : "recieved"}`}>
                 <div className="content ">
-                  <p>{message.message}</p>
+                  {message.image?
+                    (<img src={message.image} className="image__message"/>)
+                    :(<p>
+                    {message.message}
+                  </p>)}
+                  {/* <p>
+                    {message.image}
+                    {message.message}
+                  </p> */}
                 </div>
-                {/* <p>{format(message.createdAt)}</p> */}
+               
+                <p>{message.createdAt}</p>
               </div>
             </div>
           );
@@ -159,11 +171,17 @@ const Container = styled.div`
         overflow-wrap: break-word;
         padding: 1rem;
         font-size: 1.1rem;
-
         color: #d1d1d1;
+        .image__message{
+          height:20vh;
+          width:10vw;
+        }
         @media screen and (min-width: 720px) and (max-width: 1080px) {
           max-width: 70%;
         }
+      }
+      span{
+        font-size:50%;
       }
     }
     .sended {
@@ -174,10 +192,12 @@ const Container = styled.div`
     }
     .recieved {
       justify-content: flex-start;
+      display:flex;
       .content {
         background-color: silver;
         color:black;
       }
+      
     }
   }
 `;

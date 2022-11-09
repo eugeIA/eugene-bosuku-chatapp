@@ -20,15 +20,12 @@ export default function Welcome() {
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content:center;
+  margin-right:15vw;
   color: black;
   background-color: white;
   flex-direction: column;
-
-  img {
-    height: 20rem;
-  }
+  text-align:center;
   span {
     color: #4e0eff;
   }

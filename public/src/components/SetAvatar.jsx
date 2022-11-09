@@ -100,14 +100,13 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 3rem;
-  background-color: silver;
+  background-color: white;
   height: 100vh;
   width: 100vw;
 
   .loader {
     max-inline-size: 100%;
-    height:100vh;
-    width:100vw;
+   
   }
 
   .title-container {

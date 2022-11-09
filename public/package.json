@@ -8,6 +8,8 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.25.0",
     "buffer": "^6.0.3",
+    "cloudinary": "^1.32.0",
+    "cloudinary-react": "^1.8.1",
     "emoji-picker-react": "^3.6.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -23,7 +25,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "PORT=3002 react-scripts start",
+    "start": "PORT=3003 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

@@ -69,6 +69,7 @@ const Container = styled.div`
     background-color: white;
     display: flex;
     justify-content: space-between;
+    
     @media screen and (min-width: 720px) and (max-width: 1080px) {
       grid-template-columns: 35% 65%;
     }

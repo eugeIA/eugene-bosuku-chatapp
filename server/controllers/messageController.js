@@ -14,6 +14,7 @@ module.exports.getMessages = async (req, res, next) => {
       return {
         fromSelf: msg.sender.toString() === from,
         message: msg.message.text,
+        image:msg.message.media
       };
     });
     res.json(projectedMessages);
@@ -24,14 +25,14 @@ module.exports.getMessages = async (req, res, next) => {
 
 module.exports.addMessage = async (req, res, next) => {
   try {
-    const { from, to, message } = req.body;
+    const { from, to, message, image } = req.body;
     const data = await Messages.create({
-      message: { text: message },
+      message: { text: message, media:image},
       users: [from, to],
       sender: from,
     });
 
-    if (data) return res.json({ msg: "Message added successfully." });
+    if (data) return res.json({msg:"Message added succesfully"});
     else return res.json({ msg: "Failed to add message to the database" });
   } catch (ex) {
     next(ex);

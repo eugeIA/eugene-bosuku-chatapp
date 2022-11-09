@@ -27,8 +27,9 @@ module.exports.login = async (request, response, next) => {
        else{
         console.log(user);
          delete user.password
-             response.status(200).json({
-               userId:user.id,
+         response.json({
+               status:true,
+               user,
                token:`Bearer ${token}`
              })
        }
