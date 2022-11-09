@@ -21,12 +21,19 @@ export default function Welcome() {
 const Container = styled.div`
   display: flex;
   justify-content:center;
-  margin-right:15vw;
+  align-items:center;
   color: black;
   background-color: white;
   flex-direction: column;
   text-align:center;
-  span {
+  h1{
+    align-self:center;
+    span {
     color: #4e0eff;
+   }
   }
+  h3{
+    align-self:center;
+  }
+  
 `;

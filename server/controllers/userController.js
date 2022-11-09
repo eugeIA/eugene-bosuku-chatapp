@@ -21,11 +21,10 @@ module.exports.login = async (request, response, next) => {
       bcrypt.compare(password, user.password)
       .then((valid)=>{
        if(!valid){
-        console.log('invqlid')
         response.status(401).json("invalid password or username");
        } 
        else{
-        console.log(user);
+       
          delete user.password
          response.json({
                status:true,

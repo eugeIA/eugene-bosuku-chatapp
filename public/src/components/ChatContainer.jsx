@@ -166,6 +166,7 @@ const Container = styled.div`
     .message {
       display: flex;
       align-items: center;
+
       .content {
         max-width: 40%;
         overflow-wrap: break-word;

@@ -7,7 +7,8 @@ import { allUsersRoute, host } from '../utils/APIRoutes';
 import ChatContainer from '../components/ChatContainer';
 import Contacts from '../components/Contacts';
 import Welcome from '../components/Welcome';
-import process from "process"
+import process from "process";
+import loader from '../assets/loader.gif';
 
 export default function Chat() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export default function Chat() {
   const [contacts, setContacts] = useState([]);
   const [currentChat, setCurrentChat] = useState(undefined);
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [loading,setLoading]=useState(true);
   useEffect(async () => {
     if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
       navigate('/login');
@@ -34,22 +36,28 @@ export default function Chat() {
       if (currentUser.isAvatarImageSet) {
         const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
         setContacts(data.data);
+        setLoading(false);
       } else {
         navigate('/setAvatar');
       }
     }
+   
   }, [currentUser]);
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
   };
   return (
     <>
-      <Container>
-        <div className="container">
-          <Contacts contacts={contacts} changeChat={handleChatChange} />
-          {currentChat === undefined ? <Welcome /> : <ChatContainer currentChat={currentChat} socket={socket} />}
-        </div>
-      </Container>
+      {loading?(<ContainerL>
+        <img src={loader} alt="loader" className="loader" />
+      </ContainerL>):
+        (<Container>
+          <div className="container">
+            <Contacts contacts={contacts} changeChat={handleChatChange} />
+            {currentChat === undefined ? <Welcome /> : <ChatContainer currentChat={currentChat} socket={socket} />}
+          </div>
+        </Container>)}
+      
     </>
   );
 }
@@ -75,3 +83,14 @@ const Container = styled.div`
     }
   }
 `;
+const ContainerL=styled.div`
+   background-color:white;
+   display:flex;
+   justify-content:center;
+   align-items:center;
+   flex-direction:column;
+   height:100vh;
+   .loader{
+    align-self:center;
+   }
+`
